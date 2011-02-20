@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{16E5F445-EAE2-40D3-87F3-361F4C65A780}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TwoIoc.Tests</RootNamespace>
+    <AssemblyName>TwoIoc.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Machine.Specifications">
+      <HintPath>..\..\lib\mspec\Machine.Specifications.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Autowire.cs" />
+    <Compile Include="Conventions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="InstanceResolve.cs" />
+    <Compile Include="Languages.cs" />
+    <Compile Include="TypeResolve.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Net35\Net35.csproj">
+      <Project>{D6823BB3-F73C-45A0-9783-584657A27FA3}</Project>
+      <Name>Net35</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestAssembly1\TestAssembly1.csproj">
+      <Project>{D646E0FE-E9B3-4C87-8FBC-9925BE1CD476}</Project>
+      <Name>TestAssembly1</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestAssembly2\TestAssembly2.csproj">
+      <Project>{9912318C-2B61-4DCF-A8AE-9A12763650BE}</Project>
+      <Name>TestAssembly2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TwoIoc\TwoIoc.csproj">
+      <Project>{E9804E92-B42C-43F0-BC7E-58D1240BB527}</Project>
+      <Name>TwoIoc</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
