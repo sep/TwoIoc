@@ -9,7 +9,7 @@
             _instance = instance;
         }
 
-        public object Build()
+        public object Build(object[] args)
         {
             return _instance;
         }

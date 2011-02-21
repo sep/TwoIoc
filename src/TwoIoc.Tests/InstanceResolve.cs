@@ -75,8 +75,64 @@ namespace TwoIoc.Tests
         };
     }
 
+    [Subject("Instance Resolution")]
+    public class InstanceResolvedWithAdditionalArguments
+    {
+        static Container Container;
+
+        Establish context = () =>
+        {
+            Container = new Container();
+        };
+
+        Because of = () =>
+        {
+            Container.Concrete.Use<ClassWithCtorDependency>();
+        };
+
+        It can_resolve_with_additional_help = () =>
+        {
+            var resolved = Container.Get<ClassWithCtorDependency>(new TestClass());
+            
+            resolved.Dependency.ShouldNotBeNull();
+        };
+    }
+
+    [Subject("Instance Resolution")]
+    public class InstanceResolvedWithAdditionalSubclassedArguments
+    {
+        static Container Container;
+
+        Establish context = () =>
+        {
+            Container = new Container();
+        };
+
+        Because of = () =>
+        {
+            Container.Concrete.Use<ClassWithParentDependency>();
+        };
+
+        It can_resolve_with_additional_help = () =>
+        {
+            var resolved = Container.Get<ClassWithParentDependency>(new TestClass());
+
+            resolved.Dependency.ShouldNotBeNull();
+        };
+    }
+
     internal class TestClassParent { }
     internal class TestClass : TestClassParent { }
 
     internal class WhateverObject { }
+
+    internal class ClassWithParentDependency
+    {
+        public TestClassParent Dependency { get; set; }
+
+        public ClassWithParentDependency(TestClassParent dependency)
+        {
+            Dependency = dependency;
+        }
+    }
 }

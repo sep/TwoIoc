@@ -15,16 +15,21 @@ namespace TwoIoc.Builders
             _concreteType = concreteType;
         }
 
-        public object Build()
+        public object Build(object[] args)
         {
             var ctor = _concreteType.GetConstructors().MaxItem(c => c.GetParameters().Length);
 
-            var ctorArgs = ctor.GetParameters().Select(p => Resolve(p.ParameterType));
+            var ctorArgs = ctor.GetParameters().Select(p => Resolve(p.ParameterType, args));
             return Activator.CreateInstance(_concreteType, ctorArgs.ToArray());
         }
 
-        private object Resolve(Type parameterType)
+        private object Resolve(Type parameterType, object[] args)
         {
+            var result = args.FirstOrDefault(x => parameterType.IsAssignableFrom(x.GetType()));
+
+            if (result != null)
+                return result;
+
             return _resolver.Get(parameterType);
         }
     }

@@ -16,7 +16,7 @@ namespace TwoIoc.Builders
             _ctorValues = ctorValues;
         }
 
-        public object Build()
+        public object Build(object[] args)
         {
             var ctor = _concreteType.GetConstructors().MaxItem(c => c.GetParameters().Length);
 

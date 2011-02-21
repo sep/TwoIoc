@@ -22,14 +22,14 @@ namespace TwoIoc
 
         public For Concrete { get { return new For(this);}}
 
-        public T Get<T>()
+        public T Get<T>(params object[] args)
         {
-            return (T) Get(typeof (T));
+            return (T) Get(typeof (T), args);
         }
 
-        public object Get(Type toResolve)
+        public object Get(Type toResolve, params object[] args)
         {
-            return _registrations[toResolve].Build();
+            return _registrations[toResolve].Build(args);
         }
 
         internal void RegisterInstance(Type type, object objectToUse)

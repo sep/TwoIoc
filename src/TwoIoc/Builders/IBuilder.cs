@@ -2,6 +2,6 @@
 {
     public interface IBuilder
     {
-        object Build();
+        object Build(object[] args);
     }
 }
