@@ -2,6 +2,28 @@
 
 namespace TwoIoc.Tests
 {
+    [Subject("Registration")]
+    public class EjectionEjectsRegistrationsForType
+    {
+        static Container Container;
+
+        Establish context = () =>
+        {
+            Container = new Container();
+            Container.For<string>().Use("hello world");
+        };
+
+        Because of = () =>
+        {
+            Container.Eject<string>();
+        };
+
+        It throws_duplicate_registration_exception = () =>
+        {
+            Catch.Exception(() => Container.Get<string>()).ShouldNotBeNull();
+        };
+    }
+
     [Subject("Type Resolution")]
     public class TypeResolveWithSameTypeDefaultCtor
     {

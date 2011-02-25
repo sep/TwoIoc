@@ -34,8 +34,7 @@ namespace TwoIoc
 
         internal void RegisterInstance(Type type, object objectToUse)
         {
-            if (!_registrations.ContainsKey(type))
-                _registrations.Add(type, new GivenInstanceBuilder(objectToUse));
+            RegisterType(type, new GivenInstanceBuilder(objectToUse));
         }
 
         public void RegisterType(Type typeRegistration, Type typeInstance)
@@ -50,7 +49,13 @@ namespace TwoIoc
 
         internal void RegisterType(Type typeRegistration, IBuilder builder)
         {
-            _registrations.Add(typeRegistration, builder);
+            if (!_registrations.ContainsKey(typeRegistration))
+                _registrations.Add(typeRegistration, builder);
+        }
+
+        public void Eject<T>()
+        {
+            _registrations.Remove(typeof(T));
         }
 
         public void SetupConvention(Action<ConventionSetup> action)
