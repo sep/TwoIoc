@@ -3,3 +3,7 @@
 _ReSharper*
 bin
 obj
+src/ConnectivityBuild/*
+_ccl
+*.orig
+output
