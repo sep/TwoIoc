@@ -10,7 +10,7 @@ namespace TwoIoc.Tests
         Establish context = () =>
         {
             Container = new Container();
-            Container.For<string>().Use("hello world");
+            Container.For<string>().UseInstance("hello world");
         };
 
         Because of = () =>

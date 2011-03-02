@@ -16,7 +16,7 @@ namespace TwoIoc.Tests
 
         Because of = () =>
         {
-            Container.For<TestClass>().Use(Expected);
+            Container.For<TestClass>().UseInstance(Expected);
         };
 
         It resolves_the_given_instance = () =>
@@ -39,8 +39,8 @@ namespace TwoIoc.Tests
 
         Because of = () =>
         {
-            Container.For<TestClass>().Use(Expected);
-            Container.For<WhateverObject>().Use(new WhateverObject());
+            Container.For<TestClass>().UseInstance(Expected);
+            Container.For<WhateverObject>().UseInstance(new WhateverObject());
         };
 
         It resolves_the_given_instance = () =>
@@ -65,8 +65,8 @@ namespace TwoIoc.Tests
 
         Because of = () =>
         {
-            Container.For<TestClass>().Use(Expected);
-            Container.For<TestClass>().Use(Other);
+            Container.For<TestClass>().UseInstance(Expected);
+            Container.For<TestClass>().UseInstance(Other);
         };
 
         It uses_the_first = () =>

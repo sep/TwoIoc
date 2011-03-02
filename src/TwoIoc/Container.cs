@@ -29,6 +29,9 @@ namespace TwoIoc
 
         public object Get(Type toResolve, params object[] args)
         {
+            if(!_registrations.ContainsKey(toResolve))
+                throw new ContainerResolutionException(string.Format("Type not registered: {0}", toResolve));
+
             return _registrations[toResolve].Build(args);
         }
 
@@ -73,6 +76,13 @@ namespace TwoIoc
         public bool Has<T>()
         {
             return _registrations.ContainsKey(typeof (T));
+        }
+    }
+
+    public class ContainerResolutionException : Exception
+    {
+        public ContainerResolutionException(string message) : base(message)
+        {
         }
     }
 }

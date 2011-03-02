@@ -37,7 +37,7 @@ namespace TwoIoc.ContainerLanguage
             _container = container;
         }
 
-        public void Use(T objectToUse)
+        public void UseInstance(T objectToUse)
         {
             _container.RegisterInstance(typeof(T), objectToUse);
         }
