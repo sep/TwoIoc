@@ -55,7 +55,7 @@ namespace Net35
 
         public static bool HasOne<T>(this IEnumerable<T> target)
         {
-            return ToList<T>(target.Take(2)).Count == 1;
+            return ToList(target.Take(2)).Count == 1;
         }
 
         public static IEnumerable<T> Cast<T>(this IEnumerable target)
@@ -109,7 +109,7 @@ namespace Net35
 
         public static IEnumerable<T> Eval<T>(this IEnumerable<T> target)
         {
-            return ToList<T>(target);
+            return ToList(target);
         }
 
         public static List<T> ToList<T>(this IEnumerable<T> target)
@@ -122,7 +122,7 @@ namespace Net35
 
         public static T[] ToArray<T>(this IEnumerable<T> target)
         {
-            return ToList<T>(target).ToArray();
+            return ToList(target).ToArray();
         }
 
         public static T FirstOrDefault<T>(this IEnumerable<T> target)
@@ -134,7 +134,7 @@ namespace Net35
 
         public static T FirstOrDefault<T>(this IEnumerable<T> target, Func<T, bool> filter)
         {
-            return FirstOrDefault<T>(target.Where(filter));
+            return FirstOrDefault(target.Where(filter));
         }
 
         public static T First<T>(this IEnumerable<T> target)
@@ -158,6 +158,11 @@ namespace Net35
             list.Sort((x, y) => selector(x) - selector(y));
 
             return list;
+        }
+
+        public static bool Any<T>(this IEnumerable<T> target, Func<T, bool> predicate)
+        {
+            return !target.Where(predicate).Empty();
         }
     }
 }
