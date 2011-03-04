@@ -1,4 +1,6 @@
 ﻿using System;
+using Net35;
+using TwoIoc.Builders;
 using TwoIoc.Extensions;
 
 namespace TwoIoc.ContainerLanguage
@@ -35,6 +37,11 @@ namespace TwoIoc.ContainerLanguage
         public For(Container container)
         {
             _container = container;
+        }
+
+        public void UseFunc<TConcrete>(Func<TConcrete> buildIt) where TConcrete : T
+        {
+            _container.RegisterType(typeof(T), new FuncBuilder<TConcrete>(buildIt));
         }
 
         public void UseInstance(T objectToUse)
