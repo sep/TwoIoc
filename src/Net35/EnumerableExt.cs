@@ -6,6 +6,19 @@ namespace Net35
 {
     public static class EnumerableExt
     {
+        public static TResult Min<T, TResult>(this IEnumerable<T> target, Func<T, TResult> valueSelector) where TResult : IComparable
+        {
+            var values = target.Select(valueSelector);
+            if(values.Empty())
+                return default(TResult);
+
+            var currentMin = values.First();
+
+            values.Skip(1).Each(v => currentMin = (v.CompareTo(currentMin) < 0) ? v : currentMin);
+
+            return currentMin;
+        }
+
         public static IDictionary<TKey, List<TValue>> GroupBy<T, TKey, TValue>(this IEnumerable<T> target, Func<T, TKey> keySelector, Func<T, TValue> valueSelector)
         {
             var groups = new Dictionary<TKey, List<TValue>>();
@@ -77,6 +90,15 @@ namespace Net35
                     yield return item;
         }
 
+        public static IEnumerable<T> Skip<T>(this IEnumerable<T> target, int numToSkip)
+        {
+            int cnt = 0;
+            foreach(var item in target)
+                if(cnt++ < numToSkip)
+                    continue;
+                else
+                    yield return item;
+        }
         public static IEnumerable<T> Take<T>(this IEnumerable<T> target, int numToTake)
         {
             int cnt = 0;
