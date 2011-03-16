@@ -139,9 +139,14 @@ namespace Net35
 
         public static T First<T>(this IEnumerable<T> target)
         {
-            foreach (var item in target)
+            foreach(var item in target)
                 return item;
             throw new InvalidOperationException("The source sequence is empty.");
+        }
+
+        public static T First<T>(this IEnumerable<T> target, Func<T, bool> filter)
+        {
+            return target.Where(filter).First();
         }
 
         public static T LastOrDefault<T>(this IEnumerable<T> target)
