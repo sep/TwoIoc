@@ -169,5 +169,14 @@ namespace Net35
         {
             return !target.Where(predicate).Empty();
         }
+
+        public static T Max<T>(this IEnumerable<T> target, Func<T, DateTime> selector)
+        {
+            T max = target.FirstOrDefault();
+            foreach (var item in target)
+                if (selector(item) > selector(max))
+                    max = item;
+            return max;
+        }
     }
 }
