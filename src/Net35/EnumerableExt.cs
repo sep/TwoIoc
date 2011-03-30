@@ -9,36 +9,10 @@ namespace Net35
         public static T MaxItem<T>(this IEnumerable<T> target, Func<T, DateTime> selector)
         {
             T max = target.FirstOrDefault();
-            foreach(var item in target)
-                if(selector(item) > selector(max))
+            foreach (var item in target)
+                if (selector(item) > selector(max))
                     max = item;
             return max;
-        }
-
-        public static TResult Max<T, TResult>(this IEnumerable<T> target, Func<T, TResult> valueSelector) where TResult : IComparable
-        {
-            var values = target.Select(valueSelector);
-            if(values.Empty())
-                return default(TResult);
-
-            var currentMax = values.First();
-
-            values.Skip(1).Each(v => currentMax = (v.CompareTo(currentMax) > 0) ? v : currentMax);
-
-            return currentMax;
-        }
-
-        public static TResult Min<T, TResult>(this IEnumerable<T> target, Func<T, TResult> valueSelector) where TResult : IComparable
-        {
-            var values = target.Select(valueSelector);
-            if(values.Empty())
-                return default(TResult);
-
-            var currentMin = values.First();
-
-            values.Skip(1).Each(v => currentMin = (v.CompareTo(currentMin) < 0) ? v : currentMin);
-
-            return currentMin;
         }
 
         public static IDictionary<TKey, List<TValue>> GroupBy<T, TKey, TValue>(this IEnumerable<T> target, Func<T, TKey> keySelector, Func<T, TValue> valueSelector)
@@ -112,15 +86,6 @@ namespace Net35
                     yield return item;
         }
 
-        public static IEnumerable<T> Skip<T>(this IEnumerable<T> target, int numToSkip)
-        {
-            int cnt = 0;
-            foreach(var item in target)
-                if(cnt++ < numToSkip)
-                    continue;
-                else
-                    yield return item;
-        }
         public static IEnumerable<T> Take<T>(this IEnumerable<T> target, int numToTake)
         {
             int cnt = 0;
@@ -212,6 +177,15 @@ namespace Net35
         public static bool Any<T>(this IEnumerable<T> target, Func<T, bool> predicate)
         {
             return !target.Where(predicate).Empty();
+        }
+
+        public static T Max<T>(this IEnumerable<T> target, Func<T, DateTime> selector)
+        {
+            T max = target.FirstOrDefault();
+            foreach (var item in target)
+                if (selector(item) > selector(max))
+                    max = item;
+            return max;
         }
     }
 }
