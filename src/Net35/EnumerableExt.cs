@@ -6,6 +6,28 @@ namespace Net35
 {
     public static class EnumerableExt
     {
+        public static T MaxItem<T>(this IEnumerable<T> target, Func<T, DateTime> selector)
+        {
+            T max = target.FirstOrDefault();
+            foreach(var item in target)
+                if(selector(item) > selector(max))
+                    max = item;
+            return max;
+        }
+
+        public static TResult Max<T, TResult>(this IEnumerable<T> target, Func<T, TResult> valueSelector) where TResult : IComparable
+        {
+            var values = target.Select(valueSelector);
+            if(values.Empty())
+                return default(TResult);
+
+            var currentMax = values.First();
+
+            values.Skip(1).Each(v => currentMax = (v.CompareTo(currentMax) > 0) ? v : currentMax);
+
+            return currentMax;
+        }
+
         public static TResult Min<T, TResult>(this IEnumerable<T> target, Func<T, TResult> valueSelector) where TResult : IComparable
         {
             var values = target.Select(valueSelector);
@@ -190,15 +212,6 @@ namespace Net35
         public static bool Any<T>(this IEnumerable<T> target, Func<T, bool> predicate)
         {
             return !target.Where(predicate).Empty();
-        }
-
-        public static T Max<T>(this IEnumerable<T> target, Func<T, DateTime> selector)
-        {
-            T max = target.FirstOrDefault();
-            foreach (var item in target)
-                if (selector(item) > selector(max))
-                    max = item;
-            return max;
         }
     }
 }
