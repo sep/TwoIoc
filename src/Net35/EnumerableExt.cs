@@ -75,8 +75,15 @@ namespace Net35
 
         public static void Each<T>(this IEnumerable<T> target, Action<T> action)
         {
-            foreach (var item in target)
+            foreach(var item in target)
                 action(item);
+        }
+
+        public static void Each<T>(this IEnumerable<T> target, Action<T, int> action)
+        {
+            var cnt = 0;
+            foreach(var item in target)
+                action(item, cnt++);
         }
 
         public static IEnumerable<T> Where<T>(this IEnumerable<T> target, Func<T, bool> filter)
@@ -88,7 +95,7 @@ namespace Net35
 
         public static IEnumerable<T> Take<T>(this IEnumerable<T> target, int numToTake)
         {
-            int cnt = 0;
+            var cnt = 0;
             foreach (var item in target)
                 if (cnt++ < numToTake)
                     yield return item;
