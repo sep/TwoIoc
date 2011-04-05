@@ -9,5 +9,12 @@ namespace Net35
             for (var i = 0; i < numElements; i++)
                 yield return i;
         }
+
+        public static IEnumerable<int> Infinite()
+        {
+            var cnt = 0;
+            while(true)
+                yield return cnt++;
+        }
     }
 }

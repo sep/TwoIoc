@@ -93,6 +93,15 @@ namespace Net35
                     yield return item;
         }
 
+        public static IEnumerable<T> Skip<T>(this IEnumerable<T> target, int numToSkip)
+        {
+            var cnt = 0;
+            foreach(var item in target)
+                if(cnt++ < numToSkip)
+                    continue;
+                else
+                    yield return item;
+        }
         public static IEnumerable<T> Take<T>(this IEnumerable<T> target, int numToTake)
         {
             var cnt = 0;
