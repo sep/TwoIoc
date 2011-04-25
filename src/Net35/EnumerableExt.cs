@@ -6,6 +6,15 @@ namespace Net35
 {
     public static class EnumerableExt
     {
+        public static int Count<T>(this IEnumerable<T> target, Func<T, bool> predicate)
+        {
+            var cnt = 0;
+            foreach (var item in target)
+                if (predicate(item))
+                    cnt++;
+            return cnt;
+        }
+
         public static bool All<T>(this IEnumerable<T> target, Func<T, bool> predicate)
         {
             foreach (var item in target)
