@@ -220,5 +220,13 @@ namespace Net35
         {
             return !target.Where(predicate).Empty();
         }
+
+        public static IEnumerable<IEnumerable<T>> Partition<T>(this IEnumerable<T> target, int size)
+        {
+            return target
+                .Select((item, i) => new {Value = item, GroupNumber = i/size})  // add a grouping number
+                .GroupBy(item => item.GroupNumber, x => x.Value)                // group by it
+                .Select(pair => (IEnumerable<T>)pair.Value);                    // make the values the right type
+        }
     }
 }
