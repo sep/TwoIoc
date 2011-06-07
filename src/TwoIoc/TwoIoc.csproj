@@ -37,6 +37,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Version.cs">
+      <Link>Version.cs</Link>
+    </Compile>
     <Compile Include="Builders\ConcreteInstanceBuilder.cs" />
     <Compile Include="Builders\FuncBuilder.cs" />
     <Compile Include="Builders\GivenInstanceBuilder.cs" />

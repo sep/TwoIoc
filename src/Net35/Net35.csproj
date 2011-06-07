@@ -37,6 +37,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Version.cs">
+      <Link>Version.cs</Link>
+    </Compile>
     <Compile Include="Delegates.cs" />
     <Compile Include="Enumerable.cs" />
     <Compile Include="EnumerableExt.cs" />
