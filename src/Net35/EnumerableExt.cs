@@ -200,10 +200,20 @@ namespace Net35
             return target.Where(filter).First();
         }
 
+        public static T Last<T>(this IEnumerable<T> target)
+        {
+            if (target.Empty()) throw new InvalidOperationException("The source sequence is empty.");
+
+            var storedItem = default(T);
+            foreach (var item in target)
+                storedItem = item;
+            return storedItem;
+        }
+
         public static T LastOrDefault<T>(this IEnumerable<T> target)
         {
-            T storedItem = default(T);
-            foreach (var item in target)
+            var storedItem = default(T);
+            foreach(var item in target)
                 storedItem = item;
             return storedItem;
         }
