@@ -158,6 +158,13 @@ namespace Net35
                     yield return single;
         }
 
+        public static IEnumerable<T> Reverse<T>(this IEnumerable<T> target)
+        {
+            var listed = target.ToList();
+            listed.Reverse();
+            return listed;
+        }
+
         public static IEnumerable<T> Eval<T>(this IEnumerable<T> target)
         {
             return ToList(target);
