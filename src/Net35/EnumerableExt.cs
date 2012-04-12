@@ -6,6 +6,11 @@ namespace Net35
 {
     public static class EnumerableExt
     {
+        public static int Count<T>(this IEnumerable<T> target)
+        {
+            return target.Count(_ => true);
+        }
+
         public static int Count<T>(this IEnumerable<T> target, Func<T, bool> predicate)
         {
             var cnt = 0;
