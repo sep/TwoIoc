@@ -243,6 +243,11 @@ namespace Net35
             return !target.Where(predicate).Empty();
         }
 
+        public static bool Any<T>(this IEnumerable<T> target)
+        {
+            return !target.Empty();
+        }
+
         public static IEnumerable<IEnumerable<T>> Partition<T>(this IEnumerable<T> target, int size)
         {
             return target
