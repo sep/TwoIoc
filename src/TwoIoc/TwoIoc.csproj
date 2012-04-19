@@ -45,8 +45,10 @@
     <Compile Include="Builders\GivenInstanceBuilder.cs" />
     <Compile Include="Builders\GreediestCtorBuilder.cs" />
     <Compile Include="Builders\IBuilder.cs" />
+    <Compile Include="Builders\SingletonBuilder.cs" />
     <Compile Include="Container.cs" />
     <Compile Include="ContainerLanguage\For.cs" />
+    <Compile Include="ContainerLanguage\Option.cs" />
     <Compile Include="ConventionSetup.cs" />
     <Compile Include="Extensions\EnumerableExt.cs" />
     <Compile Include="Extensions\Extensions.cs" />

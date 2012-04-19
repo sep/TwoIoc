@@ -1,4 +1,5 @@
-﻿using Machine.Specifications;
+﻿using System;
+using Machine.Specifications;
 
 namespace TwoIoc.Tests
 {
@@ -124,7 +125,20 @@ namespace TwoIoc.Tests
     internal class TestClassParent { }
     internal class TestClass : TestClassParent { }
 
-    internal class WhateverObject { }
+    internal interface IWhateverObject
+    {
+        string ObjectId { get; }
+    }
+
+    internal class WhateverObject : IWhateverObject
+    {
+        public WhateverObject()
+        {
+            ObjectId = Guid.NewGuid().ToString("N");
+        }
+
+        public string ObjectId { get; private set; }
+    }
 
     internal class ClassWithParentDependency
     {
@@ -134,5 +148,53 @@ namespace TwoIoc.Tests
         {
             Dependency = dependency;
         }
+    }
+
+    [Subject("Singleton Resolution")]
+    public class SingletonResolvedForConcrete
+    {
+        static Container Container;
+
+        Establish context = () =>
+        {
+            Container = new Container();
+        };
+
+        Because of = () =>
+        {
+            Container.Concrete.Use<WhateverObject>().AsSingleton();
+        };
+
+        It resolves_the_same_instance_twice = () =>
+        {
+            var first = Container.Get<WhateverObject>();
+            var second = Container.Get<WhateverObject>();
+
+            first.ObjectId.ShouldEqual(second.ObjectId);
+        };
+    }
+
+    [Subject("Singleton Resolution")]
+    public class SingletonResolvedForFunc
+    {
+        static Container Container;
+
+        Establish context = () =>
+        {
+            Container = new Container();
+        };
+
+        Because of = () =>
+        {
+            Container.For<IWhateverObject>().UseFunc<WhateverObject>(() => new WhateverObject()).AsSingleton();
+        };
+
+        It resolves_the_same_instance_twice = () =>
+        {
+            var first = Container.Get<IWhateverObject>();
+            var second = Container.Get<IWhateverObject>();
+
+            first.ObjectId.ShouldEqual(second.ObjectId);
+        };
     }
 }

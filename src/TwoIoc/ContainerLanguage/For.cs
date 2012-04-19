@@ -1,5 +1,4 @@
-﻿using System;
-using Net35;
+﻿using Net35;
 using TwoIoc.Builders;
 using TwoIoc.Extensions;
 
@@ -7,7 +6,7 @@ namespace TwoIoc.ContainerLanguage
 {
     public class For
     {
-        Container _container;
+        readonly Container _container;
 
         public For(Container container)
         {
@@ -19,9 +18,9 @@ namespace TwoIoc.ContainerLanguage
             _container.RegisterInstance(typeof(T), objectToUse);
         }
 
-        public void Use<T>()
+        public Option Use<T>()
         {
-            _container.RegisterType(typeof(T), typeof(T));
+            return new Option(_container.RegisterType(typeof(T), typeof(T)));
         }
 
         public void UseWithCtorParams<T>(object ctorParamsAnonObj)
@@ -39,24 +38,24 @@ namespace TwoIoc.ContainerLanguage
             _container = container;
         }
 
-        public void UseFunc<TConcrete>(Func<TConcrete> buildIt) where TConcrete : T
+        public Option UseFunc<TConcrete>(Func<TConcrete> buildIt) where TConcrete : T
         {
-            _container.RegisterType(typeof(T), new FuncBuilder<TConcrete>(buildIt));
+            return new Option(_container.RegisterType(typeof(T), new FuncBuilder<TConcrete>(buildIt)));
         }
 
-        public void UseInstance(T objectToUse)
+        public Option UseInstance(T objectToUse)
         {
-            _container.RegisterInstance(typeof(T), objectToUse);
+            return new Option(_container.RegisterInstance(typeof(T), objectToUse));
         }
 
-        public void Use<TConcrete>() where TConcrete : T
+        public Option Use<TConcrete>() where TConcrete : T
         {
-            _container.RegisterType(typeof(T), typeof(TConcrete));
+            return new Option(_container.RegisterType(typeof(T), typeof(TConcrete)));
         }
 
-        public void Use<TConcrete>(object ctorParamsAnonObj) where TConcrete : T
+        public Option Use<TConcrete>(object ctorParamsAnonObj) where TConcrete : T
         {
-            _container.RegisterType(typeof(T), typeof(TConcrete), ctorParamsAnonObj.PropertyValuesToDictionary());
+            return new Option(_container.RegisterType(typeof(T), typeof(TConcrete), ctorParamsAnonObj.PropertyValuesToDictionary()));
         }
     }
 }

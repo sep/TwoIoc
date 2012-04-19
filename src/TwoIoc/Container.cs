@@ -6,13 +6,18 @@ using TwoIoc.ContainerLanguage;
 
 namespace TwoIoc
 {
+    public class Registration
+    {
+        public IBuilder Builder { get; set; }
+    }
+
     public class Container
     {
-        private readonly Dictionary<Type, IBuilder> _registrations = new Dictionary<Type, IBuilder>();
+        private readonly Dictionary<Type, Registration> _registrations = new Dictionary<Type, Registration>();
 
         public Container()
         {
-            _registrations.Add(typeof (Container), new GivenInstanceBuilder(this));
+            _registrations.Add(typeof (Container), new Registration{Builder =  new GivenInstanceBuilder(this)});
         }
 
         public For<T> For<T>()
@@ -32,28 +37,29 @@ namespace TwoIoc
             if(!_registrations.ContainsKey(toResolve))
                 throw new ContainerResolutionException(string.Format("Type not registered: {0}", toResolve));
 
-            return _registrations[toResolve].Build(args);
+            return _registrations[toResolve].Builder.Build(args);
         }
 
-        internal void RegisterInstance(Type type, object objectToUse)
+        internal Registration RegisterInstance(Type type, object objectToUse)
         {
-            RegisterType(type, new GivenInstanceBuilder(objectToUse));
+            return RegisterType(type, new GivenInstanceBuilder(objectToUse));
         }
 
-        public void RegisterType(Type typeRegistration, Type typeInstance)
+        public Registration RegisterType(Type typeRegistration, Type typeInstance)
         {
-            RegisterType(typeRegistration, new ConcreteInstanceBuilder(this, typeInstance));
+            return RegisterType(typeRegistration, new ConcreteInstanceBuilder(this, typeInstance));
         }
 
-        internal void RegisterType(Type typeRegistration, Type typeInstance, IDictionary<string, object> ctorValues)
+        internal Registration RegisterType(Type typeRegistration, Type typeInstance, IDictionary<string, object> ctorValues)
         {
-            RegisterType(typeRegistration, new GreediestCtorBuilder(typeInstance, ctorValues));
+            return RegisterType(typeRegistration, new GreediestCtorBuilder(typeInstance, ctorValues));
         }
 
-        internal void RegisterType(Type typeRegistration, IBuilder builder)
+        internal Registration RegisterType(Type typeRegistration, IBuilder builder)
         {
             if (!_registrations.ContainsKey(typeRegistration))
-                _registrations.Add(typeRegistration, builder);
+                _registrations.Add(typeRegistration, new Registration{Builder =  builder});
+            return _registrations[typeRegistration];
         }
 
         public void Eject<T>()
