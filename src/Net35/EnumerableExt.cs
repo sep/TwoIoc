@@ -238,6 +238,14 @@ namespace Net35
             return list;
         }
 
+        public static IEnumerable<T> OrderBy<T>(this IEnumerable<T> target, Func<T, long> selector)
+        {
+            var list = new List<T>(target);
+            list.Sort((x, y) => (int)(selector(x) - selector(y)));
+
+            return list;
+        }
+
         public static bool Any<T>(this IEnumerable<T> target, Func<T, bool> predicate)
         {
             return !target.Where(predicate).Empty();
