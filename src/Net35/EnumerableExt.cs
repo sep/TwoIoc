@@ -143,6 +143,12 @@ namespace Net35
                     yield break;
         }
 
+        public static IEnumerable<TResult> Select<T, TResult>(this IEnumerable target, Func<T, TResult> selector)
+        {
+            foreach (var item in target)
+                yield return selector((T)item);
+        }
+
         public static IEnumerable<TResult> Select<T, TResult>(this IEnumerable<T> target, Func<T, TResult> selector)
         {
             foreach (var item in target)
