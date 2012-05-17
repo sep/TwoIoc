@@ -18,7 +18,7 @@ namespace TwoIoc.Builders
 
         public object Build(object[] args)
         {
-            var ctor = _concreteType.GetConstructors().MaxItem(c => c.GetParameters().Length);
+            var ctor = _concreteType.GetConstructors().MaxItem((a, b) => a.GetParameters().Length.CompareTo(b.GetParameters().Length));
 
             return Activator.CreateInstance(_concreteType, ctor.GetParameters().Select(p => _ctorValues[p.Name]).ToArray());
         }
