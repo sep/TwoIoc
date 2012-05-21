@@ -1,4 +1,4 @@
-partial class DemoLoaderProperties
+partial class TwoIocProperties
 {
-    public const string Version = "0.5.0";
+    public const string Version = "0.6.0";
 }
