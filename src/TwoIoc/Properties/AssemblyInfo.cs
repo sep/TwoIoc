@@ -11,5 +11,5 @@ using System.Runtime.InteropServices;
 
 [assembly: Guid("54f984a0-324a-4489-b630-d77541cc149b")]
 
-[assembly: AssemblyVersion(DemoLoaderProperties.Version)]
-[assembly: AssemblyFileVersion(DemoLoaderProperties.Version)]
+[assembly: AssemblyVersion(TwoIocProperties.Version)]
+[assembly: AssemblyFileVersion(TwoIocProperties.Version)]
