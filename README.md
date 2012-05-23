@@ -8,6 +8,8 @@ Ever been stuck in .NET 2.0 land and wish you had an IoC container that didn't f
 * Autowire support
 * Singleton lifecycle
 * .NET 2.0 based
+* Mono compatible
+* BSD Licensed
 
 # Examples
 
