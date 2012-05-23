@@ -29,6 +29,7 @@ For those of you that have self-respect, and are still with me, here is how you 
 Sometimes parts of your application can be abstracted into a few rules.  That is what the conventions are for.
 
 The following example registers all types in the current assembly that end with `Processor`
+
     var container = new Container();
     
     container.SetupConvention(x =>
@@ -85,10 +86,10 @@ Need to pass in some constructor arguments based on some data like a config file
 
 Here's the class that needs configured:
 
-class NeedsConfigured : INeedsConfigured
-{
-    public NeedsConfigured(string hostname, int port) { ... }
-}
+    class NeedsConfigured : INeedsConfigured
+    {
+        public NeedsConfigured(string hostname, int port) { ... }
+    }
 
 Use the `WithCtorParams` option, with an anonymous type that has property names that match your constructor parameter names.  Whoa, sweet.
 
